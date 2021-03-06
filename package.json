@@ -1,0 +1,33 @@
+{
+  "name": "http-notification-system",
+  "version": "1.0.0",
+  "description": "A server (or set of servers) to keep track of topics and subscribers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pubserver": "nodemon ./src/pubserver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielcoker/http-notification-system.git"
+  },
+  "keywords": [
+    "http",
+    "notification"
+  ],
+  "author": "Daniel Coker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielcoker/http-notification-system/issues"
+  },
+  "homepage": "https://github.com/danielcoker/http-notification-system#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
