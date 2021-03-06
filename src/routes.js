@@ -1,8 +1,10 @@
 const express = require('express');
 
-const { createSubscription } = require('./controllers');
+const { createSubscription, publishMessage } = require('./controllers');
 
 const router = express.Router();
+
+router.post('/publish/:topic', publishMessage);
 
 router.post('/subscribe/:topic', createSubscription);
 
