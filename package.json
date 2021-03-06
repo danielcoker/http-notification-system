@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pubserver": "nodemon ./src/pubserver.js"
+    "pubserver": "nodemon ./src/pubserver.js",
+    "seeder:import": "node ./src/seeder.js -i",
+    "seeder:delete": "node ./src/seeder.js -d"
   },
   "repository": {
     "type": "git",
