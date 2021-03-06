@@ -1,8 +1,12 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const setupMongoose = require('./helpers/setupMongoose');
 
 dotenv.config();
+
+// Connect to MongoDB server.
+setupMongoose();
 
 const app = express();
 
