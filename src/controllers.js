@@ -3,8 +3,8 @@ const Topic = require('./models/Topic');
 /**
  * Creates a subscription to a topic.
  *
- * @param {*} req The request object.
- * @param {*} res The response object.
+ * @param {Object} req The request object.
+ * @param {Object} res The response object.
  *
  * @returns JSON response containing the url and the topic.
  */
