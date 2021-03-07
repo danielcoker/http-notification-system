@@ -2,7 +2,7 @@ const axios = require('axios');
 const ErrorResponse = require('./helpers/errorResponse');
 const asyncHandler = require('./helpers/asyncHandler');
 const Topic = require('./models/Topic');
-const { isEmpty } = require('./helpers/validations');
+const { isEmpty, isURL } = require('./helpers/validations');
 
 /**
  * Creates a subscription to a topic.
@@ -27,6 +27,10 @@ exports.createSubscription = asyncHandler(async (req, res) => {
 
   if (!isSubscribed) {
     if (isEmpty(url)) throw new ErrorResponse('URL cannot be empty.', 400);
+
+    if (!isURL(url)) {
+      throw new ErrorResponse('Subscriber must be a valid URL.', 400);
+    }
 
     topic.subscribers.push(url);
     await topic.save();
