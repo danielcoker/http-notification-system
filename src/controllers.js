@@ -2,6 +2,7 @@ const axios = require('axios');
 const ErrorResponse = require('./helpers/errorResponse');
 const asyncHandler = require('./helpers/asyncHandler');
 const Topic = require('./models/Topic');
+const { isEmpty, isURL } = require('./helpers/validations');
 
 /**
  * Creates a subscription to a topic.
@@ -12,6 +13,8 @@ const Topic = require('./models/Topic');
  * @returns JSON response containing the url and the topic.
  */
 exports.createSubscription = asyncHandler(async (req, res) => {
+  const { url } = req.body;
+
   const topic = await Topic.findOne({ name: req.params.topic });
   if (!topic) {
     throw new ErrorResponse('Topic does not exist.', 404);
@@ -19,15 +22,21 @@ exports.createSubscription = asyncHandler(async (req, res) => {
 
   // Check if URL is already subscribed to this topic.
   const isSubscribed = topic.subscribers.some(
-    (subscriber) => subscriber === req.body.url
+    (subscriber) => subscriber === url
   );
 
   if (!isSubscribed) {
-    topic.subscribers.push(req.body.url);
+    if (isEmpty(url)) throw new ErrorResponse('URL cannot be empty.', 400);
+
+    if (!isURL(url)) {
+      throw new ErrorResponse('Subscriber must be a valid URL.', 400);
+    }
+
+    topic.subscribers.push(url);
     await topic.save();
   }
 
-  res.status(200).json({ url: req.body.url, topic: topic.name });
+  res.status(200).json({ url, topic: topic.name });
 });
 
 /**
