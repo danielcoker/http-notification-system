@@ -1,4 +1,6 @@
 const axios = require('axios');
+const ErrorResponse = require('./helpers/errorResponse');
+const asyncHandler = require('./helpers/asyncHandler');
 const Topic = require('./models/Topic');
 
 /**
@@ -9,8 +11,11 @@ const Topic = require('./models/Topic');
  *
  * @returns JSON response containing the url and the topic.
  */
-exports.createSubscription = async (req, res) => {
+exports.createSubscription = asyncHandler(async (req, res) => {
   const topic = await Topic.findOne({ name: req.params.topic });
+  if (!topic) {
+    throw new ErrorResponse('Topic does not exist.', 404);
+  }
 
   // Check if URL is already subscribed to this topic.
   const isSubscribed = topic.subscribers.some(
@@ -23,7 +28,7 @@ exports.createSubscription = async (req, res) => {
   }
 
   res.status(200).json({ url: req.body.url, topic: topic.name });
-};
+});
 
 /**
  * Publish a message to topic and send HTTP requests to topic subscribers.
@@ -33,12 +38,11 @@ exports.createSubscription = async (req, res) => {
  *
  * @returns HTTP response based on successful or unsuccessful publish.
  */
-exports.publishMessage = async (req, res) => {
+exports.publishMessage = asyncHandler(async (req, res) => {
   const topic = await Topic.findOne({ name: req.params.topic });
-  if (!topic)
-    return res
-      .status(404)
-      .json({ message: 'Unable to publish message to this topic.' });
+  if (!topic) {
+    throw new ErrorResponse('Unable to publish message to this topic.', 404);
+  }
 
   const payload = {
     topic: topic.name,
@@ -58,4 +62,4 @@ exports.publishMessage = async (req, res) => {
   });
 
   res.status(200).json({ message: 'Message published successfuly.' });
-};
+});
