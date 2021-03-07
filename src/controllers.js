@@ -36,7 +36,7 @@ exports.createSubscription = async (req, res) => {
 exports.publishMessage = async (req, res) => {
   const topic = await Topic.findOne({ name: req.params.topic });
   if (!topic)
-    res
+    return res
       .status(404)
       .json({ message: 'Unable to publish message to this topic.' });
 
