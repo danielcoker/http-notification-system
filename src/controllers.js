@@ -61,5 +61,5 @@ exports.publishMessage = asyncHandler(async (req, res) => {
     }
   });
 
-  res.status(200).json({ message: 'Message published successfuly.' });
+  res.status(200).json({ message: 'Message published successfully.' });
 });
