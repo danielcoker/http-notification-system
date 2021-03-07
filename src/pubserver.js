@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const setupMongoose = require('./helpers/setupMongoose');
 const routes = require('./routes');
+const errorHandler = require('./helpers/errorHandler');
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/', routes);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;
 
