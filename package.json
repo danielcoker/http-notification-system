@@ -4,7 +4,7 @@
   "description": "A server (or set of servers) to keep track of topics and subscribers.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "set NODE_ENV=test && mocha --timeout=5000 --exit",
     "pubserver": "nodemon ./src/pubserver.js",
     "subserver": "nodemon ./src/subserver.js",
     "seeder:import": "node ./src/seeder.js -i",
@@ -32,6 +32,9 @@
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
+    "chai": "^4.3.3",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.1",
     "morgan": "^1.10.0"
   }
 }
